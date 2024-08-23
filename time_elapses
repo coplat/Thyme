@@ -1,0 +1,36 @@
+fn main() {
+
+struct Log {
+    name: String,
+    time: u8
+    event: enum
+
+    enum Event_type {
+        Start,
+        End, 
+    }
+
+        let log1 = FunctionLog {
+            function_name: String::from("FirstTest"),
+            timestamp: 5,
+            event: Event::Start,
+        };
+    
+        let log1b = FunctionLog {
+            function_name: String::from("FirstTest"),
+            timestamp: 20,
+            event: Event::End,
+        };
+
+        if log1.function_name == log1b.function_name {
+            // Calculate the time difference
+            let time_difference = log1b.timestamp as i32 - log1.timestamp as i32;
+    
+            println!("Time difference between log1 and log1b: {} seconds", time_difference);
+        } else {
+            println!("Has no time passed? or was that super fast?");
+        }
+    
+    }
+    
+}
