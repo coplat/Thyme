@@ -1,0 +1,77 @@
+/*
+From Cassidoo's August Newsletter! 
+Q: Given a string s containing letters and digits,
+return the longest substring of s where the number
+of distinct letters is equal to the number of distinct
+digits. If there are multiple substrings with the same
+length, return
+the one that appears first.
+*/
+
+use std::collections::HashSet;
+fn count_unique_characters(s: &str) -> usize {
+    let mut unique_chars = HashSet::new();
+    
+    for c in s.chars() {
+        unique_chars.insert(c);
+    }
+    
+    unique_chars.len()
+}
+
+fn find_longest_balanced_distinct_substring(s: &str) -> String {
+    let chars: Vec<char> = s.chars().collect();
+    let n = chars.len();
+    let mut longest_substr = String::new();
+
+    for i in 0..n {
+        let mut distinct_letters = HashSet::new();
+        let mut distinct_numbers = HashSet::new();
+        let mut current_substring = String::new();
+
+        for j in i..n {
+            let c = chars[j];
+            current_substring.push(c);
+
+            if c.is_alphabetic() {
+                distinct_letters.insert(c);
+            }
+            if c.is_numeric() {
+                distinct_numbers.insert(c);
+            }
+
+            // Check if the number of distinct letters and numbers are equal
+            if distinct_letters.len() == distinct_numbers.len() {
+                // If this substring is longer than the previously found one, update the longest substring
+                if current_substring.len() > longest_substr.len() {
+                    longest_substr = current_substring.clone();
+                }
+                // If it’s the same length as the current longest but found earlier, keep the first one
+                if current_substring.len() == longest_substr.len() && longest_substr.is_empty() {
+                    longest_substr = current_substring.clone();
+                }
+            }
+        }
+    }
+
+    longest_substr
+}
+
+fn main() {
+     //finding out how many unique characters there are
+    let s = String::from("abc12345");
+    let balanced_substring = find_longest_balanced_distinct_substring(&s);
+
+    println!("Hello, world! Our initial string is: '{}'", s);
+    let unique_count = count_unique_characters(&s);
+println!("Number of unique characters: {}", unique_count);
+
+    if balanced_substring.is_empty() {
+        println!("No balanced substring with distinct characters found.");
+    } else {
+        println!("The longest balanced substring with distinct characters is: '{}'", balanced_substring);
+    }
+}
+
+    
+
